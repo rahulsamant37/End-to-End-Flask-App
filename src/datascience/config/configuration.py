@@ -1,6 +1,6 @@
 from src.datascience.constants import *
 from src.datascience.utils.common import read_yaml, create_directories
-from src.datascience.entity.config_entity import (DataIngestionConfig,DataValidationConfig,DataTransformationConfig)
+from src.datascience.entity.config_entity import (DataIngestionConfig,DataValidationConfig,DataTransformationConfig,ModelTrainerConfig)
 
 class ConfigurationManager:
     def __init__(self,
@@ -50,3 +50,20 @@ class ConfigurationManager:
             data_path=config.data_path
         )
         return data_tranformation_config
+    
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        config=self.config.model_trainer
+        params=self.params.gini
+        schema=self.schema.TARGET_COLUMN
+        create_directories([config.root_dir])
+        model_trainer_config=ModelTrainerConfig(
+            root_dir=config.root_dir,
+            train_data_path=config.train_data_path,
+            test_data_path=config.test_data_path,
+            model_name=config.model_name,
+            max_depth=params.max_depth,
+            min_samples_split=params.min_samples_split,
+            random_state=params.random_state,
+            target_column=schema.name
+        )
+        return model_trainer_config
