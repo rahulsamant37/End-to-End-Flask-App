@@ -5,3 +5,8 @@ data_ingestion:
   source_URL: https://github.com/rahulsamant37/data/archive/refs/heads/main.zip
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
+
+data_validation:
+  root_dir: artifacts/data_validation
+  unzip_data_dir: artifacts/data_ingestion/data-main/Iris.csv
+  STATUS_FILE: artifacts/data_validation/status.txt

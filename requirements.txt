@@ -13,3 +13,7 @@ joblib
 types-PyYAML
 Flask
 Flask-Cors
+ydata-profiling
+ipywidgets
+visions
+numba
