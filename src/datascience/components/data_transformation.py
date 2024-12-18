@@ -4,7 +4,7 @@ from src.datascience import logger
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from src.datascience.config.configuration import DataTransformationConfig
+from src.datascience.entity.config_entity import DataTransformationConfig
 
 class DataTransformation:
     def __init__(self, config: DataTransformationConfig):
