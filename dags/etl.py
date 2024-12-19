@@ -49,6 +49,19 @@ with DAG(
 
     ## Step 3: Transform the data (Pick the Informantion that I need to save)
 
+    @task
+    def transform_weather_data(response):
+        current_condition = response['current_condition'][0]
+        transformed_data = {
+            'location': 'Chandigarh',
+            'observation_time': current_condition['observation_time'],
+            'temp_c': float(current_condition['temp_C']),
+            'humidity': int(current_condition['humidity']),
+            'weather_desc': current_condition['weatherDesc'][0]['value'],
+        }
+        return transformed_data
+
+
     ## Step 4: Load the data into Postgres SQL
 
     ## Step 5: Verify the data DBViewer
