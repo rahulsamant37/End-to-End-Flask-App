@@ -43,7 +43,7 @@ with DAG(
         http_conn_id='weather_api',
         endpoint='Chandigarh?format=j1',
         method='GET',
-        response_filter=lambda response: response.json(),
+        response_filter=lambda response: json.loads(response.text),
         log_response=True,
         dag=dag,
     )
@@ -55,7 +55,10 @@ with DAG(
         current_condition = response['current_condition'][0]
         weather_data = {
             'location': 'Chandigarh',
-            'observation_time': current_condition['observation_time'],
+            'observation_time': datetime.strptime(
+                current_condition['observation_time'],
+                '%I:%M %p'  # Parse time string to datetime
+            ),
             'temp_c': float(current_condition['temp_C']),
             'humidity': int(current_condition['humidity']),
             'weather_desc': current_condition['weatherDesc'][0]['value'],
@@ -72,20 +75,19 @@ with DAG(
         INSERT INTO weather_data (location, observation_time, temp_c, humidity, weather_desc)
         VALUES (%s, %s, %s, %s, %s);
         """
-        observation_time = datetime.strptime(weather_data['observation_time'], '%I:%M %p').time()
         postgres_hook.run(insert_query, parameters=(
             weather_data['location'],
-            observation_time,
+            weather_data['observation_time'],
             weather_data['temp_c'],
             weather_data['humidity'],
             weather_data['weather_desc'],
         ))
 
     ## Step 5: Define the task dependency
-    create_table() >> extract_weather
-    api_respone=extract_weather.output
-    transform_data=transform_weather_data(api_respone)
-    load_weather_data(transform_data)
+    create_table_task = create_table()
+    transform_task = transform_weather_data(extract_weather.output)
+    load_task = load_weather_data(transform_task)
+    create_table_task >> extract_weather >> transform_task >> load_task
 
     ## Step 6: Verify the data DBViewer
 
