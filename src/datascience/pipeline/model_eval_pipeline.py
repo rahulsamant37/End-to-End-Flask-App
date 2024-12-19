@@ -8,7 +8,7 @@ class ModelEvalTrainingPipeline:
     def __init__(self):
         pass
 
-    def main(self):
+    def inititate_model_eval(self):
         config = ConfigurationManager()
         model_eval_config = config.get_model_eval_config()
         model_eval_config = ModelEval(config=model_eval_config)
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     try:
         logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
         obj = ModelEvalTrainingPipeline()
-        obj.main()
+        obj.inititate_model_eval()
         logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
     except Exception as e:
         logger.exception(e)

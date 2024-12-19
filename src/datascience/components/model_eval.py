@@ -10,6 +10,10 @@ from pathlib import Path
 from src.datascience.entity.config_entity import (ModelEvalConfig)
 from src.datascience.utils.common import save_json
 
+import os
+os.environ['MLFLOW_TRACKING_URI']="https://dagshub.com/rahulsamantcoc2/End-to-End_Flash_App.mlflow"
+os.environ['MLFLOW_TRACKING_USERNAME']="rahulsamantcoc2"
+os.environ['MLFLOW_TRACKING_PASSWORD']="33607bcb15d4e7a7cca29f0f443d16762cc15549"
 
 class ModelEval:
     def __init__(self, config: ModelEvalConfig):
