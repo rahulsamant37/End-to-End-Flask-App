@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Flower Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52,152,219,0.3);
+        }
+
+        .submit-btn {
+            background: #2980b9;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #3498db;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f4f8;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Iris Flower Prediction</h1>
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="sepal_length">Sepal Length (cm)</label>
+                <input type="number" id="sepal_length" name="sepal_length" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="sepal_width">Sepal Width (cm)</label>
+                <input type="number" id="sepal_width" name="sepal_width" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="petal_length">Petal Length (cm)</label>
+                <input type="number" id="petal_length" name="petal_length" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="petal_width">Petal Width (cm)</label>
+                <input type="number" id="petal_width" name="petal_width" step="0.1" required>
+            </div>
+            <button type="submit" class="submit-btn">Predict Species</button>
+        </form>
+        <div class="result" id="result">
+            <!-- Result will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Optional: Add client-side form validation and AJAX submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // You can add AJAX call here to submit the form without page reload
+            // For now, just submit the form normally
+            this.submit();
+        });
+    </script>
+</body>
+</html>
