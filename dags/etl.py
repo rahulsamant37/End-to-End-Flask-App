@@ -3,7 +3,8 @@ from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.decorators import task
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.utils.dates import days_ago
-from json
+from datetime import datetime
+import json
 
 ## Define the DAG
 with DAG(
@@ -52,18 +53,39 @@ with DAG(
     @task
     def transform_weather_data(response):
         current_condition = response['current_condition'][0]
-        transformed_data = {
+        weather_data = {
             'location': 'Chandigarh',
             'observation_time': current_condition['observation_time'],
             'temp_c': float(current_condition['temp_C']),
             'humidity': int(current_condition['humidity']),
             'weather_desc': current_condition['weatherDesc'][0]['value'],
         }
-        return transformed_data
+        return weather_data
 
 
     ## Step 4: Load the data into Postgres SQL
 
-    ## Step 5: Verify the data DBViewer
+    @task
+    def load_weather_data(weather_data):
+        postgres_hook = PostgresHook(postgres_conn_id="my_postgres_connection")
+        insert_query = """
+        INSERT INTO weather_data (location, observation_time, temp_c, humidity, weather_desc)
+        VALUES (%s, %s, %s, %s, %s);
+        """
+        observation_time = datetime.strptime(weather_data['observation_time'], '%I:%M %p').time()
+        postgres_hook.run(insert_query, parameters=(
+            weather_data['location'],
+            observation_time,
+            weather_data['temp_c'],
+            weather_data['humidity'],
+            weather_data['weather_desc'],
+        ))
 
-    ## Step 6: Define the task dependency
+    ## Step 5: Define the task dependency
+    create_table() >> extract_weather
+    api_respone=extract_weather.output
+    transform_data=transform_weather_data(api_respone)
+    load_weather_data(transform_data)
+
+    ## Step 6: Verify the data DBViewer
+
