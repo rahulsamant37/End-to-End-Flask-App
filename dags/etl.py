@@ -15,6 +15,26 @@ with DAG(
     
     ## Step 1: Create the table if it doesn't exists
 
+    @task
+    def create_table():
+        ## initialize the Postgreshook
+        postgres_hook=PostgresHook(postgres_conn_id="my_postgres_connection")
+
+        ## SQL query to create the table
+        create_table_query="""
+        CREATE TABLE IF NOT EXISTS weather_data (
+            id SERIAL PRIMARY KEY,
+            location VARCHAR(100),
+            observation_time TIMESTAMP,
+            temp_c FLOAT,
+            humidity INT,
+            weather_desc VARCHAR(255)
+        );
+        """
+
+        ## Execute the table creation query
+        postgres_hook.run(create_table_query)
+
     ## Step 2: Exract the Weather API Data (Extract Pipeline)
 
     ## Step 3: Transform the data (Pick the Informantion that I need to save)
