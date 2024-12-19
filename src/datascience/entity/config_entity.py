@@ -30,3 +30,13 @@ class ModelTrainerConfig:
     min_samples_split: int
     random_state: int
     target_column: str
+
+@dataclass
+class ModelEvalConfig:
+    root_dir: Path
+    test_data_path: Path
+    model_path: Path
+    all_params: dict
+    metric_file_name: Path
+    target_column: str
+    mlflow_uri: str

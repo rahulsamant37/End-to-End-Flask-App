@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/End-to-End_Flash_App/mlruns/0/5db3a9f67c9c4990b0ef4c5e915904b3/artifacts
+end_time: 1734568533227
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5db3a9f67c9c4990b0ef4c5e915904b3
+run_name: victorious-wren-402
+run_uuid: 5db3a9f67c9c4990b0ef4c5e915904b3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734568522480
+status: 3
+tags: []
+user_id: rahul
