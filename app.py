@@ -11,6 +11,10 @@ app=Flask(__name__)
 def homepage():
     return "Hello, World!"
 
+@app.route('/greet/<name>')
+def greets(name):
+    return f"Hello, {name}!"
+
 @app.route('/Model',methods=['GET'])
 def model_main():
     return render_template('index.html')
