@@ -7,9 +7,9 @@ from src.datascience.pipeline.prediction_pipeline import PredictionPipeline
 
 app=Flask(__name__)
 
-@app.route('/',methods=['GET'])# route to display the home page
+@app.route('/',methods=['GET']) # route to display the home page
 def homepage():
-    return "Welcome to Flask App!"
+    return "Hello, World!"
 
 @app.route('/Model',methods=['GET'])
 def model_main():
