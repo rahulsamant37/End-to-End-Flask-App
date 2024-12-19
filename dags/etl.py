@@ -36,6 +36,16 @@ with DAG(
         postgres_hook.run(create_table_query)
 
     ## Step 2: Exract the Weather API Data (Extract Pipeline)
+    
+    extract_weather = SimpleHttpOperator(
+        task_id='extract_weather',
+        http_conn_id='weather_api',
+        endpoint='Chandigarh?format=j1',
+        method='GET',
+        response_filter=lambda response: response.json(),
+        log_response=True,
+        dag=dag,
+    )
 
     ## Step 3: Transform the data (Pick the Informantion that I need to save)
 
