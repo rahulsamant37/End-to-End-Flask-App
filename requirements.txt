@@ -17,5 +17,6 @@ ydata-profiling
 ipywidgets
 visions
 numba
+pytest
 
 ##-e .
